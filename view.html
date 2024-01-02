@@ -83,42 +83,62 @@
       fetchSuggestedVideos();
 
       function fetchSuggestedVideos() {
-        // Simulate fetching suggested videos from the index.html page
-        const suggestedVideosData = [
-          { title: "Video 1 Title", thumbnail: "thumbnail1.jpg", description: "Description or views" },
-          { title: "Video 2 Title", thumbnail: "thumbnail2.jpg", description: "Description or views" },
-          // Add more suggested videos as needed
-        ];
+        const suggestedVideos = document.querySelectorAll(".video-frame");
 
-        // Dynamically populate the suggested videos section
-        suggestedVideosData.forEach(videoData => {
-          const suggestedVideo = document.createElement("div");
-          suggestedVideo.className = "suggested-video";
+        suggestedVideos.forEach(suggestedVideo => {
+          const suggestedVideoData = {
+            title: suggestedVideo.parentElement.querySelector(".video-info h3").textContent,
+            thumbnail: "", // Add the path to the thumbnail image here
+            videoSource: suggestedVideo.src,
+          };
 
-          const thumbnailImg = document.createElement("img");
-          thumbnailImg.src = videoData.thumbnail;
-          thumbnailImg.alt = videoData.title;
-
-          const videoInfo = document.createElement("div");
-          videoInfo.className = "suggested-video-info";
-
-          const titleHeading = document.createElement("h4");
-          titleHeading.textContent = videoData.title;
-
-          const descriptionParagraph = document.createElement("p");
-          descriptionParagraph.textContent = videoData.description;
-
-          videoInfo.appendChild(titleHeading);
-          videoInfo.appendChild(descriptionParagraph);
-
-          suggestedVideo.appendChild(thumbnailImg);
-          suggestedVideo.appendChild(videoInfo);
-
-          suggestedVideosContainer.appendChild(suggestedVideo);
+          const suggestedVideoElement = createSuggestedVideoElement(suggestedVideoData);
+          suggestedVideosContainer.appendChild(suggestedVideoElement);
         });
+      }
+
+      function createSuggestedVideoElement(videoData) {
+        const suggestedVideo = document.createElement("div");
+        suggestedVideo.className = "suggested-video";
+
+        const thumbnailImg = document.createElement("img");
+        thumbnailImg.src = videoData.thumbnail;
+        thumbnailImg.alt = videoData.title;
+
+        const videoInfo = document.createElement("div");
+        videoInfo.className = "suggested-video-info";
+
+        const titleHeading = document.createElement("h4");
+        titleHeading.textContent = videoData.title;
+
+        videoInfo.appendChild(titleHeading);
+
+        suggestedVideo.appendChild(thumbnailImg);
+        suggestedVideo.appendChild(videoInfo);
+
+        suggestedVideo.addEventListener("mouseover", function () {
+          video.src = videoData.videoSource;
+          video.play();
+        });
+
+        suggestedVideo.addEventListener("mouseout", function () {
+          video.pause();
+          video.currentTime = 0;
+        });
+
+        suggestedVideo.addEventListener("click", function () {
+          openVideo(videoData.videoSource);
+        });
+
+        return suggestedVideo;
+      }
+
+      function openVideo(videoSource) {
+        window.location.href = `view.html?src=${encodeURIComponent(videoSource)}`;
       }
     });
   </script>
 
 </body>
 </html>
+
