@@ -124,7 +124,12 @@
 
 <script>
   // You can add JavaScript functionality here if needed
-  
+    function openVideo(videoSource) {
+    window.location.href = `view.html?src=${encodeURIComponent(videoSource)}`;
+  }
+
+
+   // You can add JavaScript functionality here if needed
   
 const videos = document.querySelectorAll("video")
 
