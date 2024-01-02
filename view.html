@@ -1,0 +1,48 @@
+<!-- view.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f1f1f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    video {
+      width: 60vw;
+      border-radius: 20px;
+    }
+  </style>
+  <title>Video Viewer</title>
+</head>
+<body>
+  <video controls>
+    <!-- Video source will be dynamically set via JavaScript -->
+  </video>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const video = document.querySelector("video");
+
+    // Set the video source based on the URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoSource = urlParams.get('src');
+    
+    if (videoSource) {
+      video.src = decodeURIComponent(videoSource);
+      video.play(); // Autoplay the video
+    }
+  });
+</script>
+
+</body>
+</html>
