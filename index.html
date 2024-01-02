@@ -146,9 +146,36 @@
 </div>
 
 <script>
-  function openVideo(videoSource) {
+   function openVideo(videoSource) {
     window.location.href = `view.html?src=${encodeURIComponent(videoSource)}`;
   }
+
+  // Add this code to handle video preview animation
+  const videos = document.querySelectorAll("video");
+
+  videos.forEach(video => {
+    video.addEventListener("mouseover", function () {
+      this.play();
+      this.muted = false; // Unmute on hover
+    });
+
+    video.addEventListener("mouseout", function () {
+      this.pause();
+      this.currentTime = 0; // Reset video to start on mouseout
+      this.muted = true; // Mute again on mouseout
+    });
+
+    video.addEventListener("touchstart", function () {
+      this.play();
+      this.muted = false; // Unmute on touchstart
+    });
+
+    video.addEventListener("touchend", function () {
+      this.pause();
+      this.currentTime = 0; // Reset video to start on touchend
+      this.muted = true; // Mute again on touchend
+    });
+  });
 </script>
 
 </body>
