@@ -17,32 +17,108 @@
       height: 100vh;
     }
 
+    .video-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     video {
       width: 60vw;
       border-radius: 20px;
+    }
+
+    .suggested-videos {
+      margin-top: 20px;
+      width: 60vw;
+      max-width: 600px; /* Limit suggested videos width for better readability */
+      overflow: hidden;
+    }
+
+    .suggested-video {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .suggested-video img {
+      width: 80px; /* Adjust image size as needed */
+      margin-right: 10px;
+      border-radius: 10px;
+    }
+
+    .suggested-video-info {
+      flex-grow: 1;
     }
   </style>
   <title>Video Viewer</title>
 </head>
 <body>
-  <video controls>
-    <!-- Video source will be dynamically set via JavaScript -->
-  </video>
+  <div class="video-container">
+    <video controls id="mainVideo">
+      <!-- Video source will be dynamically set via JavaScript -->
+    </video>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const video = document.querySelector("video");
+    <div class="suggested-videos" id="suggestedVideos">
+      <!-- Suggested videos section -->
+      <!-- JavaScript will dynamically populate this section -->
+    </div>
+  </div>
 
-    // Set the video source based on the URL parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const videoSource = urlParams.get('src');
-    
-    if (videoSource) {
-      video.src = decodeURIComponent(videoSource);
-      video.play(); // Autoplay the video
-    }
-  });
-</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const video = document.getElementById("mainVideo");
+      const suggestedVideosContainer = document.getElementById("suggestedVideos");
+
+      // Set the main video source based on the URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const videoSource = urlParams.get('src');
+
+      if (videoSource) {
+        video.src = decodeURIComponent(videoSource);
+        video.play(); // Autoplay the main video
+      }
+
+      // Fetch suggested videos from the index.html page
+      fetchSuggestedVideos();
+
+      function fetchSuggestedVideos() {
+        // Simulate fetching suggested videos from the index.html page
+        const suggestedVideosData = [
+          { title: "Video 1 Title", thumbnail: "thumbnail1.jpg", description: "Description or views" },
+          { title: "Video 2 Title", thumbnail: "thumbnail2.jpg", description: "Description or views" },
+          // Add more suggested videos as needed
+        ];
+
+        // Dynamically populate the suggested videos section
+        suggestedVideosData.forEach(videoData => {
+          const suggestedVideo = document.createElement("div");
+          suggestedVideo.className = "suggested-video";
+
+          const thumbnailImg = document.createElement("img");
+          thumbnailImg.src = videoData.thumbnail;
+          thumbnailImg.alt = videoData.title;
+
+          const videoInfo = document.createElement("div");
+          videoInfo.className = "suggested-video-info";
+
+          const titleHeading = document.createElement("h4");
+          titleHeading.textContent = videoData.title;
+
+          const descriptionParagraph = document.createElement("p");
+          descriptionParagraph.textContent = videoData.description;
+
+          videoInfo.appendChild(titleHeading);
+          videoInfo.appendChild(descriptionParagraph);
+
+          suggestedVideo.appendChild(thumbnailImg);
+          suggestedVideo.appendChild(videoInfo);
+
+          suggestedVideosContainer.appendChild(suggestedVideo);
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
