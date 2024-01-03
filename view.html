@@ -95,7 +95,7 @@
 
   // Disable controls for the ad video
   videoPlayer.addEventListener('play', function() {
-    if (videoPlayer.currentSrc.includes("ForBiggerBlazes.mp4")) {
+    if (videoPlayer.currentSrc.includes(videoSource)) {
       videoPlayer.controls = false;
     }
   });
@@ -103,7 +103,7 @@
   // Play ad when video player starts playing
   videoPlayer.addEventListener('play', function() {
     // Show skip button only if the video is the ad
-    if (videoPlayer.currentSrc.includes("ForBiggerBlazes.mp4")) {
+    if (videoPlayer.currentSrc.includes(videoSource)) {
       // Show skip button after 10 seconds
       setTimeout(function() {
         skipButton.style.display = 'block';
@@ -138,6 +138,3 @@
 </script>
 
 </body>
-</html>
-
-
