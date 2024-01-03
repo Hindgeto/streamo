@@ -80,6 +80,12 @@
 </div>
 
 <script>
+  // استخراج قيمة معلمة الاستعلام من عنوان URL
+  function getQueryParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+
   // Get references to elements
   var videoPlayer = document.getElementById('videoPlayer');
   var skipButton = document.getElementById('skipButton');
@@ -109,7 +115,8 @@
   // Skip the ad and play the main video
   function skipAd() {
     // Replace video source with main video
-    videoPlayer.src = "http://c3.cdnwe.com/uploads_514fbf37333d7bbcd1d2d2b9091c4779/36864/BySex_Net_36864_720p.mp4";
+    const mainVideoSrc = getQueryParam('video') || "http://c3.cdnwe.com/uploads_514fbf37333d7bbcd1d2d2b9091c4779/36864/BySex_Net_36864_720p.mp4";
+    videoPlayer.src = mainVideoSrc;
     videoPlayer.controls = true; // Enable controls for the main video
     videoPlayer.play();
     skipButton.style.display = 'none';
