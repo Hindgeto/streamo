@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Preview</title>
+  <style>
+    #videoContainer {
+      position: relative;
+      width: 640px;
+      height: 360px;
+    }
+
+    #videoPlayer {
+      width: 100%;
+      height: 100%;
+    }
+
+    #skipButton {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      display: none;
+      padding: 8px;
+      border-radius: 25px;
+      width: 100px;
+      background: #ffef00;
+      border: none;
+    }
+
+    #overlayAd {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50%;
+      height: 50%;
+      margin-bottom: 10px;
+      background-image: url('https://cdni.pornpics.com/1280/1/259/55374865/55374865_012_7c56.jpg');
+      background-size: cover;
+      display: none;
+    }
+
+    #skipOverlayButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      display: none;
+      width: 15px;
+      background: #ffef00;
+      border: none;
+      text-align: center;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 5px;
+      padding-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Video Container -->
+<div id="videoContainer">
+  <!-- Video Player -->
+  <video id="videoPlayer" controls>
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Skip Button -->
+  <button id="skipButton" onclick="skipAd()">Skip Ad</button>
+
+  <!-- Overlay Ad Image -->
+  <div id="overlayAd">
+    <!-- Skip Overlay Button -->
+    <div id="skipOverlayButton" onclick="skipOverlayAd()">X</div>
+  </div>
+</div>
+
+<script>
+  // Get references to elements
+  var videoPlayer = document.getElementById('videoPlayer');
+  var skipButton = document.getElementById('skipButton');
+  var overlayAd = document.getElementById('overlayAd');
+  var skipOverlayButton = document.getElementById('skipOverlayButton');
+
+  // Disable controls for the ad video
+  videoPlayer.addEventListener('play', function() {
+    if (videoPlayer.currentSrc.includes("ForBiggerBlazes.mp4")) {
+      videoPlayer.controls = false;
+    }
+  });
+
+  // Play ad when video player starts playing
+  videoPlayer.addEventListener('play', function() {
+    // Show skip button only if the video is the ad
+    if (videoPlayer.currentSrc.includes("ForBiggerBlazes.mp4")) {
+      // Show skip button after 10 seconds
+      setTimeout(function() {
+        skipButton.style.display = 'block';
+      }, 10000);
+    }
+
+    // Show overlay ad only if the main video is playing
+    setTimeout(function() {
+      if (videoPlayer.currentSrc.includes("BySex_Net_36864_720p.mp4")) {
+        overlayAd.style.display = 'block';
+        skipOverlayButton.style.display = 'block';
+      }
+    }, 10000);
+  });
+
+  // Skip the ad and play the main video
+  function skipAd() {
+    // Replace video source with main video
+    videoPlayer.src = "http://c3.cdnwe.com/uploads_514fbf37333d7bbcd1d2d2b9091c4779/36864/BySex_Net_36864_720p.mp4";
+    videoPlayer.controls = true; // Enable controls for the main video
+    videoPlayer.play();
+    skipButton.style.display = 'none';
+    overlayAd.style.display = 'none'; // Hide overlay ad when skipping
+    skipOverlayButton.style.display = 'none';
+  }
+
+  // Skip the overlay ad
+  function skipOverlayAd() {
+    overlayAd.style.display = 'none';
+    skipOverlayButton.style.display = 'none';
+  }
+
+  // Set the main video source based on the URL parameter
+  document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const videoSource = urlParams.get('src');
+
+    if (videoSource) {
+      videoPlayer.src = decodeURIComponent(videoSource);
+      videoPlayer.controls = true; // Enable controls for the main video
+      videoPlayer.play();
+    }
+  });
+</script>
+
+</body>
+</html>
