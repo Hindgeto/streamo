@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Player with Ad</title>
+  <title>Preview Page with Ad</title>
   <style>
     #videoContainer {
       position: relative;
@@ -30,13 +30,12 @@
 
     #overlayAd {
       position: absolute;
-      top:50%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 50%;
       height: 50%;
-      margin-bottom: 10px;
-      background-image: url('https://cdni.pornpics.com/1280/1/259/55374865/55374865_012_7c56.jpg');
+      background-image: url('https://hindgeto.github.io/app2/4.png');
       background-size: cover;
       display: none;
     }
@@ -65,8 +64,8 @@
 <div id="videoContainer">
   <!-- Video Player -->
   <video id="videoPlayer" controls>
-    <!-- Replace the ad video source with the actual ad video source -->http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
-    <source src="https://mediax.sxccdn.com/rmP0_Ywosj_Ws7MGP7D3YA==,1703629949/30520/preview_240p.mp4" type="video/mp4">
+    <!-- Replace the video source with the selected video -->
+    <source src="http://c3.cdnwe.com/uploads_514fbf37333d7bbcd1d2d2b9091c4779/36864/BySex_Net_36864_720p.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
@@ -89,15 +88,9 @@
 
   // Disable controls for the ad video
   videoPlayer.addEventListener('play', function() {
-    if (videoPlayer.currentSrc.includes("preview_240p.mp4")) {
-      videoPlayer.controls = false;
-    }
-  });
-
-  // Play ad when video player starts playing
-  videoPlayer.addEventListener('play', function() {
     // Show skip button only if the video is the ad
-    if (videoPlayer.currentSrc.includes("preview_240p.mp4")) {
+    if (videoPlayer.currentSrc.includes("BySex_Net_36864_720p.mp4")) {
+      videoPlayer.controls = false;
       // Show skip button after 10 seconds
       setTimeout(function() {
         skipButton.style.display = 'block';
@@ -105,16 +98,18 @@
     }
   });
 
-  // Show overlay ad after 10 seconds
+  // Show overlay ad only if the main video is playing
   setTimeout(function() {
-    overlayAd.style.display = 'block';
-    skipOverlayButton.style.display = 'block';
+    if (videoPlayer.currentSrc.includes("BySex_Net_36864_720p.mp4")) {
+      overlayAd.style.display = 'block';
+      skipOverlayButton.style.display = 'block';
+    }
   }, 10000);
 
   // Skip the ad and play the main video
   function skipAd() {
     // Replace video source with main video
-    videoPlayer.src = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+    videoPlayer.src = "http://c3.cdnwe.com/uploads_514fbf37333d7bbcd1d2d2b9091c4779/36864/BySex_Net_36864_720p.mp4";
     videoPlayer.controls = true; // Enable controls for the main video
     videoPlayer.play();
     skipButton.style.display = 'none';
@@ -131,3 +126,4 @@
 
 </body>
 </html>
+
