@@ -103,15 +103,13 @@
         skipButton.style.display = 'block';
       }, 10000);
     }
-
-    // Show overlay ad only if the main video is playing
-    setTimeout(function() {
-      if (videoPlayer.currentSrc.includes("ForBiggerBlazes.mp4")) {
-        overlayAd.style.display = 'block';
-        skipOverlayButton.style.display = 'block';
-      }
-    }, 10000);
   });
+
+  // Show overlay ad after 10 seconds
+  setTimeout(function() {
+    overlayAd.style.display = 'block';
+    skipOverlayButton.style.display = 'block';
+  }, 10000);
 
   // Skip the ad and play the main video
   function skipAd() {
@@ -133,4 +131,3 @@
 
 </body>
 </html>
-
