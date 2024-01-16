@@ -24,6 +24,7 @@
     }
 
     .video-container {
+      position: relative;
       width: 100%;
       max-width: 400px;
       margin: 10px;
@@ -43,21 +44,29 @@
       background: transparent;      
     }
 
+    .play-pause-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      cursor: pointer;
+      color: white;
+      font-size: 18px;
+      z-index: 1;
+    }
+
     @media screen and (min-width: 600px) {
       .video-container {
         max-width: 25%;
       }
     }
     
-    
     video {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  width: 33.3%;
-  padding:20px;
-  float: left;
-}
+      position: relative;
+      display: inline-block;
+      vertical-align: top;
+      width: 100%;
+      padding: 20px;
+    }
   </style>
 
 
@@ -146,10 +155,22 @@
 </div>
 
 <script>
-   function openVideo(videoSource) {
+ 
+function openVideo(videoSource) {
     window.location.href = `view.html?src=${encodeURIComponent(videoSource)}`;
   }
 
+  function togglePlayPause(button) {
+    const video = button.nextElementSibling;
+    if (video.paused) {
+      video.play();
+      button.innerHTML = "❚❚"; // Pause icon
+    } else {
+      video.pause();
+      button.innerHTML = "▶️"; // Play icon
+    }
+  }
+  
   // Add this code to handle video preview animation
   const videos = document.querySelectorAll("video");
 
